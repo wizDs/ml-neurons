@@ -1,5 +1,6 @@
 import io
 import base64
+import os
 import httpx
 from PIL import Image
 from typing import NamedTuple, Union
@@ -25,9 +26,14 @@ def url_image_to_base64(image_url: str) -> str:
 
 def image_to_base64(path: str) -> str:
     try:
-        return local_image_to_base64(path)
+        if path.startswith("http"):
+            return url_image_to_base64(path)
+        
+        if os.path.isfile(path):
+            return local_image_to_base64(path)
+    
     except:
-        return url_image_to_base64(path)
+        raise FileNotFoundError(f"could not be found: {path}")
 
 def image_message(image_name: str) -> GenericMessage:
     return GenericMessage(

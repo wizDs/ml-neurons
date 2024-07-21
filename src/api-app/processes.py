@@ -6,7 +6,7 @@ from image_utils import image_message, GenericMessage
 
 neuron_prompts = NeuronPrompts()
 
-class ProcessA(object):
+class ProcessA:
     def __init__(self, llm):
         
         self.llm = llm
@@ -38,7 +38,7 @@ class ProcessA(object):
         return f"Prompt 1:\n\n{neuron_prompts.A1}\n\nPrompt 2:\n\n{neuron_prompts.A2}"
 
 
-class ProcessB(object):
+class ProcessB:
     def __init__(self, llm):
         
         self.llm = llm
@@ -55,7 +55,7 @@ class ProcessB(object):
         return f"Prompt:\n\n{neuron_prompts.B}"
 
 
-class ProcessC(object):
+class ProcessC:
     def __init__(self, llm):
         
         self.llm = llm
@@ -73,9 +73,3 @@ class ProcessC(object):
 
     def __repr__(self) -> None:
         return f"Prompt:\n\n{neuron_prompts.C}"
-
-
-
-if __name__ == '__main__':
-    process_a = ProcessA()
-    process_a

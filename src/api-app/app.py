@@ -70,6 +70,7 @@ async def summarise_outputs(first_output: str, second_output: str) -> list[Schem
     output: list[dict] = process_c.run(first_output, second_output)
     return list(map(SchemaProcessC.model_validate, output))
 
+
 @app.post("/workflow/", response_model=SchemaWorkflow)
 async def summarise_outputs(image_path: str, heatmap_path: str, all: bool=False) -> SchemaWorkflow:
     base64_encoded_image = image_utils.image_to_base64(image_path)
