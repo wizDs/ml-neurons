@@ -3,8 +3,25 @@ from langchain_core.messages import SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from prompts import NeuronPrompts
 from image_utils import image_message, GenericMessage
+from json.decoder import JSONDecodeError
 
 neuron_prompts = NeuronPrompts()
+
+def load_json(content: str):
+    """error handling of json"""
+    if content.startswith("```json\n") and content.endswith("```"):
+        # remove first 8 chars
+        content = content[8:] 
+        # remove last 3 chars
+        content = content[:-3] 
+    try:
+        return json.loads(content)
+    except JSONDecodeError:
+        raise ValueError(f"content is not json: {content=}")
+    except Exception as e:
+        raise Exception(e)
+        
+
 
 class ProcessA:
     def __init__(self, llm):
@@ -25,14 +42,23 @@ class ProcessA:
 
             
     def run_a1(self, image_data: str) -> list[dict]:
-        response1 = json.loads(self.chain1.invoke({"image_data": image_data}).content)
-        return response1
+        try:
+            content = self.chain1.invoke({"image_data": image_data}).content
+        except Exception as e:
+            raise Exception(e)
+        
+        return load_json(content)
 
 
     def run_a2(self, heatmap_image_data: str) -> list[dict]:
-        response2 = json.loads(self.chain2.invoke({"heatmap_image_data": heatmap_image_data}).content)
-        return response2
-    
+        try:
+            content = self.chain2.invoke({"heatmap_image_data": heatmap_image_data}).content
+        except Exception as e:
+            raise Exception(e)
+        
+        return load_json(content)
+
+        
 
     def __repr__(self) -> None:
         return f"Prompt 1:\n\n{neuron_prompts.A1}\n\nPrompt 2:\n\n{neuron_prompts.A2}"
@@ -48,7 +74,13 @@ class ProcessB:
         self.chain = self.prompt | self.llm
         
     def run(self, image_data: str) -> list[dict]:
-        return json.loads(self.chain.invoke({"image_data": image_data}).content)
+        try:
+            content = self.chain.invoke({"image_data": image_data}).content
+        except Exception as e:
+            raise Exception(e)
+        
+        return load_json(content)
+
     
     
     def __repr__(self) -> None:
@@ -68,8 +100,13 @@ class ProcessC:
         self.chain = self.prompt | self.llm
         
     def run(self, first_output: str, second_output: str) -> list[dict]:
-        return  json.loads(self.chain.invoke({"first_output": first_output,
-                                              "second_output": second_output}).content)
+        try:
+            content = self.chain.invoke({"first_output": first_output,
+                                         "second_output": second_output}).content
+        except Exception as e:
+            raise Exception(e)
+        
+        return load_json(content)
 
     def __repr__(self) -> None:
         return f"Prompt:\n\n{neuron_prompts.C}"

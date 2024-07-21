@@ -39,7 +39,7 @@ class SchemaWorkflow(pydantic.BaseModel):
 app = FastAPI()
 
 # import process prompts
-llm = ChatOpenAI(model="gpt-4o", api_key=os.environ["OPENAI_API_KEY"])
+llm = ChatOpenAI(model="gpt-4o-mini", api_key=os.environ["OPENAI_API_KEY"])
 process_a = ProcessA(llm=llm)
 process_b = ProcessB(llm=llm)
 process_c = ProcessC(llm=llm)
