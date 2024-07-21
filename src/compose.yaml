@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+
+  frontend-app:
+    build: 
+      context: frontend-app/.
+      dockerfile: Dockerfile
+    ports:
+      - "8501:8501"
+    networks:
+      - default
+    volumes:
+      - ./data:/src/data
+
+  api-app: 
+    build: 
+      context: api-app/.
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file: .env
+    networks:
+      - default
+    volumes:
+      - ./data:/src/data
+
+
+networks:
+  default:
+    name: neurons
