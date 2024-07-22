@@ -1,11 +1,11 @@
 import streamlit as st
 import requests
 from config import ENDPOINT_ROOT
+from image_utils import show_image_and_decode_to_str
 
-image_path = st.text_input(label="Image path")
+uploaded_file = st.file_uploader(label="Load image", type=['png', 'jpg', 'jpeg'])
 
-if image_path:
-    st.image(image=image_path)
+image: str = show_image_and_decode_to_str(uploaded_file)
 
 run_process = st.button("Run process")
 
@@ -14,7 +14,7 @@ if run_process:
     with st.status("Running process"):
 
         response = requests.post(url=f"{ENDPOINT_ROOT}/process-b/",
-                                params={"image_path": image_path})
+                                json={"image": image})
 
         st.write("process response:")
         st.write(response.json())

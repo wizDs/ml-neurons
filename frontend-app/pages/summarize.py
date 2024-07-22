@@ -12,7 +12,7 @@ if run_process:
     with st.status("Running process"):
 
         response = requests.post(url=f"{ENDPOINT_ROOT}/process-c/",
-                                params={"first_output": output1,
+                                json={"first_output": output1,
                                         "second_output": output2})
 
         st.write("process response:")
