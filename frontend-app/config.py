@@ -1,1 +1,1 @@
-ENDPOINT_ROOT = "http://localhost:8000"
+ENDPOINT_ROOT = "http://api-app:8000"

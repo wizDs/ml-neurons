@@ -1,6 +1,8 @@
 # Building workflow involving multiple tasks with LLMs
 The purpose of this project is to build a workflow able to describe and assess an ad (picture) using Python, LangChain and OpenAPI.
 
+It has been implemented in two applications, a front-end (Streamlit) and a backend (FastAPI), which each possess a seperate Dockerfile.
+
 
 # Quick start (based on bash shell):
 1. install [Python 3.12](https://www.python.org/downloads/release/python-3124/)
