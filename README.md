@@ -5,7 +5,7 @@ It has been implemented in two applications, a front-end (Streamlit) and a backe
 
 
 # Quick start (based on bash shell):
-1. install [Python 3.12](https://www.python.org/downloads/release/python-3124/)
+1. install [Python 3.10](https://www.python.org/downloads/release/python-3124/)
 2. install java virtual machine 1.8 from following page [Docker](https://www.docker.com/)
 3. clone this repository `https://github.com/wizDs/ml-neurons.git`
 4. change directory to cloned repository `cd {path to directory}`
