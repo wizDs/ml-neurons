@@ -1,1 +1,2 @@
 ENDPOINT_ROOT = "http://api-app:8000"
+ENCODING="ISO-8859-1"

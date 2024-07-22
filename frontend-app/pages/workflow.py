@@ -1,16 +1,23 @@
 import streamlit as st
 import requests
+from image_utils import show_image_and_decode_to_str
 from config import ENDPOINT_ROOT
 
-image_path = st.text_input(label="Image path")
-heatmap_path = st.text_input(label="Heatmap path")
+input_cols = st.columns(2)
 
-if image_path and heatmap_path:
+with input_cols[0]:
+    image_file = st.file_uploader(label="Load Image", type=['png', 'jpg', 'jpeg'])
+with input_cols[1]:
+    heatmap_file = st.file_uploader(label="Load Heatmap", type=['png', 'jpg', 'jpeg'])
+
+
+if (image_file is not None) and (heatmap_file is not None):
     cols = st.columns(2)
     with cols[0]:
-        st.image(image=image_path)
+        image: str = show_image_and_decode_to_str(image_file)
+
     with cols[1]:
-        st.image(image=heatmap_path)
+        heatmap: str = show_image_and_decode_to_str(heatmap_file)
 
 run_workflow = st.button("Run workflow")
 
@@ -19,9 +26,9 @@ if run_workflow:
     with st.status("Running workflow"):
 
         response = requests.post(url=f"{ENDPOINT_ROOT}/workflow/",
-                                params={"image_path": image_path,
-                                        "heatmap_path": heatmap_path,
-                                        "all": True})
+                                json={"image": image,
+                                      "heatmap": heatmap,
+                                      "all": True})
 
         st.write("workflow response:")
         st.write(response.json())
